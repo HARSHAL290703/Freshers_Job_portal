@@ -1,20 +1,27 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function AuthForm({ onSubmit, type, role }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    role: role,  // Role passed from AuthPage
+    role: role,  
   });
-
+   const navigate=useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    if(type==="signin" && role==="fresher")
+    {
+       navigate("/fresherdashboard")
+    }
+    if(e.target.type==="signup" && role==="employer")
+    {
+      navigate("/employeerdashboard");
+    }
   };
 
   return (
@@ -51,7 +58,7 @@ export default function AuthForm({ onSubmit, type, role }) {
       )}
 
       <button type="submit" className="btn w-100" style={{ backgroundColor: '#2A2F4F', color: '#fff' }}>
-        {type === "signup" ? "Sign Up" : "Sign In"}
+        {/* {type === "signup" ? "Sign Up" : "Sign In"},{role===} */}
       </button>
     </form>
   );
